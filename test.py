@@ -95,8 +95,8 @@ class Detector(object):
 
         boxes[:, :, :, 0] += offset
         boxes[:, :, :, 1] += np.transpose(offset, (1, 0, 2))
-        boxes[:, :, :, :2] = 1.0 * boxes[:, :, :, 0:2] / self.cell_size
-        boxes[:, :, :, 2:] = np.square(boxes[:, :, :, 2:])
+        boxes[:, :, :, :2] = 1.0 * boxes[:, :, :, 0:2] / self.cell_size 
+        boxes[:, :, :, 2:] = np.square(boxes[:, :, :, 2:])     # 宽高还原
 
         boxes *= self.image_size
 

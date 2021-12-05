@@ -204,13 +204,15 @@ class YOLONet(object):
                 name='class_loss') * self.class_scale
 
             # object_loss
+            # iou_predict_truth就是预测的bounding box和真实的bounding box之间的IOU
+            # 而predict_scales是预测的
             object_delta = object_mask * (predict_scales - iou_predict_truth)
             object_loss = tf.reduce_mean(
                 tf.reduce_sum(tf.square(object_delta), axis=[1, 2, 3]),
                 name='object_loss') * self.object_scale
 
             # noobject_loss
-            noobject_delta = noobject_mask * predict_scales
+            noobject_delta = noobject_mask * (predict_scales - 0)
             noobject_loss = tf.reduce_mean(
                 tf.reduce_sum(tf.square(noobject_delta), axis=[1, 2, 3]),
                 name='noobject_loss') * self.noobject_scale
